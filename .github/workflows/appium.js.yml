@@ -25,6 +25,12 @@ jobs:
       - name: Install Dependencies
         run: npm install
 
+      # ⬇️ **Tambahkan langkah ini untuk install driver Appium yang hilang**
+      - name: Install Appium Driver (UiAutomator2)
+        run: |
+          npx appium driver install uiautomator2
+          npx appium driver list --installed # Verifikasi driver sudah terinstal
+
       - name: Start Appium Server
         run: |
           Start-Process -NoNewWindow -FilePath "npx" -ArgumentList "appium" -PassThru
