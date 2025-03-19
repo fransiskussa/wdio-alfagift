@@ -35,6 +35,7 @@ describe('Alfagift App Automation', () => {
                 await el1.addValue("chitato");
                 const el2 = await driver.$("-android uiautomator:new UiSelector().className(\"android.view.ViewGroup\").instance(3)");
                 await el2.click();
+                console.log("hehe");
                 const el3 = await driver.$("-android uiautomator:new UiSelector().resourceId(\"com.alfamart.alfagift:id/btn_add_to_cart\").instance(0)");
                 await el3.click();
                 const el4 = await driver.$("id:com.alfamart.alfagift:id/btn_increase_qty");
