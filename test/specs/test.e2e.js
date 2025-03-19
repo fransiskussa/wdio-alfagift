@@ -24,6 +24,14 @@ describe('Alfagift App Automation', () => {
 
     it('should automate Alfagift app', async () => {
         try {
+
+                await driver.action('pointer')
+                .move({ duration: 0, x: 977, y: 527 })
+                .down({ button: 0 })
+                .pause(50)
+                .up({ button: 0 })
+                .perform();
+          
                  await driver.action('pointer')
                 .move({ duration: 0, x: 459, y: 420 })
                 .down({ button: 0 })
