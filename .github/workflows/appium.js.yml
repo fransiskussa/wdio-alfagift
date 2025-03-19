@@ -1,4 +1,4 @@
-name: Appium CI/CD
+name: Appium WebdriverIO Tests
 
 on:
   push:
@@ -7,31 +7,43 @@ on:
   pull_request:
     branches:
       - main
+  workflow_dispatch: # Memungkinkan manual trigger
 
 jobs:
   test:
-    runs-on: self-hosted  # Gunakan runner yang kita buat
+    runs-on: windows-latest
+
     steps:
-      - name: Checkout repository
-        uses: actions/checkout@v4
+      - name: Checkout Repository
+        uses: actions/checkout@v3
 
       - name: Setup Node.js
-        uses: actions/setup-node@v4
+        uses: actions/setup-node@v3
         with:
-          node-version: '18'
+          node-version: 18
 
-      - name: Install dependencies
+      - name: Install Dependencies
         run: npm install
 
       - name: Start Appium Server
         run: |
-          start /B appium
+          Start-Process -NoNewWindow -FilePath "npx" -ArgumentList "appium" -PassThru
 
-      - name: Run Appium Tests
-        run: npm test
+      - name: Run WebdriverIO Tests
+        run: npx wdio wdio.conf.js
 
-      - name: Upload Test Report
-        uses: actions/upload-artifact@v4
+      - name: Generate Allure Report
+        if: always()
+        run: npx allure generate allure-results --clean -o allure-report
+
+      - name: Upload Allure Report
+        uses: actions/upload-artifact@v3
         with:
-          name: test-report
-          path: ./reports
+          name: allure-report
+          path: allure-report
+
+      - name: Upload JUnit Test Results
+        uses: actions/upload-artifact@v3
+        with:
+          name: junit-results
+          path: junit-results
