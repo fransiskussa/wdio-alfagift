@@ -43,7 +43,7 @@ jobs:
           path: allure-report
 
       - name: Upload JUnit Test Results
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: junit-results
           path: junit-results
