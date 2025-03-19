@@ -24,51 +24,39 @@ describe('Alfagift App Automation', () => {
 
     it('should automate Alfagift app', async () => {
         try {
-
-                
-                 await driver.action('pointer')
-                .move({ duration: 0, x: 459, y: 420 })
-                .down({ button: 0 })
-                .pause(50)
-                .up({ button: 0 })
-                .perform();
-
-                const el1 = await driver.$("id:com.alfamart.alfagift:id/edt_search");
-                await el1.addValue("chitato");
-                const el2 = await driver.$("-android uiautomator:new UiSelector().className(\"android.view.ViewGroup\").instance(3)");
-                await el2.click();
-                console.log("hehe");
-                const el3 = await driver.$("-android uiautomator:new UiSelector().resourceId(\"com.alfamart.alfagift:id/btn_add_to_cart\").instance(0)");
-                await el3.click();
-                const el4 = await driver.$("id:com.alfamart.alfagift:id/btn_increase_qty");
-                await el4.click();
-                const el5 = await driver.$("-android uiautomator:new UiSelector().resourceId(\"com.alfamart.alfagift:id/btn_add_to_cart\").instance(0)");
-                await el5.click();
-                const el6 = await driver.$("-android uiautomator:new UiSelector().resourceId(\"com.alfamart.alfagift:id/btn_decrease_qty\").instance(0)");
-                await el6.click();
-                const el7 = await driver.$("id:com.alfamart.alfagift:id/btn_basket");
-                await el7.click();
-                const el8 = await driver.$("-android uiautomator:new UiSelector().resourceId(\"com.alfamart.alfagift:id/btnDecreaseQty\").instance(0)");
-                await el8.click();
-                const el9 = await driver.$("id:com.alfamart.alfagift:id/btn_primary");
-                await el9.click();
-                const el10 = await driver.$("id:com.alfamart.alfagift:id/btnDecreaseQty");
-                await el10.click();
-                const el11 = await driver.$("id:com.alfamart.alfagift:id/btn_primary");
-                await el11.click();
-                const el12 = await driver.$("id:com.alfamart.alfagift:id/btn_action_wrapper");
-                await el12.click();
-                const el13 = await driver.$("id:com.alfamart.alfagift:id/iv_homepage");
-                await el13.click();
-
-
+            await driver.$("id:com.alfamart.alfagift:id/edt_search").waitForExist({ timeout: 5000 });
+            const searchBox = await driver.$("id:com.alfamart.alfagift:id/edt_search");
+            await searchBox.addValue("chitato");
+    
+            const firstItem = await driver.$("-android uiautomator:new UiSelector().className(\"android.view.ViewGroup\").instance(3)");
+            await firstItem.waitForExist({ timeout: 5000 });
+            await firstItem.click();
+    
+            allure.addStep("Menambahkan produk ke keranjang");
+            const addToCart = await driver.$("id:com.alfamart.alfagift:id/btn_add_to_cart");
+            await addToCart.waitForExist({ timeout: 5000 });
+            await addToCart.click();
+    
+            const increaseQty = await driver.$("id:com.alfamart.alfagift:id/btn_increase_qty");
+            await increaseQty.waitForExist({ timeout: 5000 });
+            await increaseQty.click();
+    
+            allure.addStep("Mengurangi jumlah produk");
+            const decreaseQty = await driver.$("id:com.alfamart.alfagift:id/btn_decrease_qty");
+            await decreaseQty.waitForExist({ timeout: 5000 });
+            await decreaseQty.click();
+    
+            allure.addStep("Membuka halaman keranjang");
+            const openCart = await driver.$("id:com.alfamart.alfagift:id/btn_basket");
+            await openCart.waitForExist({ timeout: 5000 });
+            await openCart.click();
+    
         } catch (error) {
             allure.addAttachment("Error Screenshot", Buffer.from(await driver.takeScreenshot(), 'base64'), "image/png");
             throw error;
         }
     });
+    
 
-    // after(async () => {
-    //     await driver.deleteSession();
-    // });
+ 
 });
