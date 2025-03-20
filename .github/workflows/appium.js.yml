@@ -42,14 +42,12 @@ jobs:
         if: always()
         run: npx allure generate allure-results --clean -o allure-report
 
+      - name: Run Convert Report to Excel
+        run: node convertToExcel.js
+        
       - name: Upload Allure Report
         uses: actions/upload-artifact@v4
         with:
           name: allure-report
           path: allure-report
 
-      - name: Upload JUnit Test Results
-        uses: actions/upload-artifact@v4
-        with:
-          name: junit-results
-          path: junit-results
