@@ -1,7 +1,8 @@
 exports.config = {
     runner: 'local',
     port: 4723,
-    specs: ['./test/specs/test.e2e.js'],
+    // specs: ['./test/specs/test.e2e.js'],
+    specs: ['./test/specs/**/*.js'],
     capabilities: [{
         platformName: 'Android',
         'appium:deviceName': 'GIZPKF6TOFVWW4IV',
@@ -16,9 +17,10 @@ exports.config = {
     reporters: [
         'spec',
         ['allure', {
-            outputDir: 'allure-results',
-            disableWebdriverStepsReporting: true,
+            outputDir: 'allure-results',  // Direktori penyimpanan hasil
+            disableWebdriverStepsReporting: false,
             disableWebdriverScreenshotsReporting: false,
+            useCucumberStepReporter: false
         }]
     ],
     services: ['appium'],

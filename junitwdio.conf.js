@@ -17,17 +17,18 @@ exports.config = {
     framework: 'mocha',
     reporters: [
         'spec',
+        ['allure', {
+            outputDir: 'allure-results',
+            disableWebdriverStepsReporting: false,
+            disableWebdriverScreenshotsReporting: false,
+        }],
         ['junit', {
-            outputDir: './junit-results/', // Direktori penyimpanan hasil XML
-            outputFileFormat: function(options) {
-                return `results-${options.cid}.xml`; // Nama file XML per session
-            },
-            errorOptions: {
-                error: 'message',
-                failure: 'stack'
+            outputDir: './junit-reports/',
+            outputFileFormat: function(options) { // optional
+                return `results-${options.cid}.xml`
             }
         }]
-    ],
+     ],
     services: ['appium'],
     mochaOpts: {
         timeout: 600000
